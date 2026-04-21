@@ -1,44 +1,40 @@
-const formulario = document.getElementById('formularioStaff');
-
-formulario.addEventListener('submit', function(e) {
+document.getElementById('staffForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    // PEGA AQUÍ TU URL (asegúrate de que esté entre las comillas)
-    const webhookURL = "https://discord.com/api/webhooks/1496149202084954233/TfALhN8Z6F4xi953Eo9zfjgByfR-thwxQvuox3uNds2Pb392idLYPIkyQCDPEyqq_9Ec";
+    const webhookURL = "TU_WEBHOOK_AQUI";https://discord.com/api/webhooks/1496149202084954233/TfALhN8Z6F4xi953Eo9zfjgByfR-thwxQvuox3uNds2Pb392idLYPIkyQCDPEyqq_9Ec // <--- PEGA TU ENLACE DE DISCORD AQUÍ
 
-    const nombre = document.getElementById('nombre').value;
-    const edad = document.getElementById('edad').value;
-    const experiencia = document.getElementById('experiencia').value;
+    const username = document.getElementById('username').value;
+    const age = document.getElementById('age').value;
+    const experience = document.getElementById('experience').value;
 
-    const datos = {
-        content: "📢 **Nueva postulación de Staff recibida**",
+    const payload = {
         embeds: [{
-            title: "Candidato para FS22 Vanilla RP",
-            color: 3066993,
+            title: "📩 Nueva Postulación de Staff",
+            color: 7419530,
             fields: [
-                { name: "Usuario de Discord", value: nombre, inline: true },
-                { name: "Edad", value: edad, inline: true },
-                { name: "Experiencia/Motivo", value: experiencia }
+                { name: "Usuario", value: username, inline: true },
+                { name: "Edad", value: age, inline: true },
+                { name: "Experiencia", value: experience }
             ],
-            footer: { text: "Sistema de Postulaciones Privado" }
+            footer: { text: "FS22 Vanilla RP" },
+            timestamp: new Date()
         }]
     };
 
     fetch(webhookURL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(datos)
+        body: JSON.stringify(payload)
     })
-    .then(respuesta => {
-        if (respuesta.ok) {
-            alert("¡Postulación enviada con éxito! Revisa tu Discord.");
-            formulario.reset();
+    .then(response => {
+        if (response.ok) {
+            document.getElementById('status').innerText = "✅ ¡Enviado con éxito!";
+            document.getElementById('staffForm').reset();
         } else {
-            alert("Discord rechazó el mensaje. Verifica el enlace del webhook.");
+            document.getElementById('status').innerText = "❌ Error al enviar.";
         }
     })
     .catch(error => {
-        console.error("Error:", error);
-        alert("Fallo al conectar con Discord.");
+        document.getElementById('status').innerText = "❌ Error de conexión.";
     });
 });
