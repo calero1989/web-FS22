@@ -38,3 +38,4 @@ document.getElementById('staffForm').addEventListener('submit', function(e) {
         document.getElementById('status').innerText = "❌ Error de conexión.";
     });
 });
+
