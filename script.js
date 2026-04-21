@@ -1,7 +1,7 @@
 document.getElementById('staffForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    const webhookURL = "TU_WEBHOOK_AQUI";https://discord.com/api/webhooks/1496149202084954233/TfALhN8Z6F4xi953Eo9zfjgByfR-thwxQvuox3uNds2Pb392idLYPIkyQCDPEyqq_9Ec // <--- PEGA TU ENLACE DE DISCORD AQUÍ
+    const webhookURL = "https://discord.com/api/webhooks/1496149202084954233/TfALhN8Z6F4xi953Eo9zfjgByfR-thwxQvuox3uNds2Pb392idLYPIkyQCDPEyqq_9Ec";
 
     const username = document.getElementById('username').value;
     const age = document.getElementById('age').value;
