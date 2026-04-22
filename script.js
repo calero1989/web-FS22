@@ -9,7 +9,7 @@ document.getElementById('staffForm').addEventListener('submit', function(e) {
     }
 
     // 2. Tu configuración (Pega tu Webhook aquí)
-    const webhookURL = "TU_WEBHOOK_DE_DISCORD_AQUI"; 
+    const webhookURL = "https://discord.com/api/webhooks/1496149202084954233/TfALhN8Z6F4xi953Eo9zfjgByfR-thwxQvuox3uNds2Pb392idLYPIkyQCDPEyqq_9Ec"; 
 
     // 3. Recoger los datos del formulario
     const username = document.getElementById('username').value;
