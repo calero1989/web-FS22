@@ -5,8 +5,9 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh; /* Cambiado a min-height por si el contenido es largo */
     margin: 0;
+    padding: 20px;
 }
 
 .container {
@@ -15,12 +16,12 @@ body {
     border-radius: 10px;
     box-shadow: 0 4px 15px rgba(0,0,0,0.5);
     width: 100%;
-    max-width: 400px;
+    max-width: 450px; /* Un poco más ancho para el Captcha */
 }
 
 h1 { text-align: center; color: #7289da; }
 
-label { display: block; margin-top: 15px; margin-bottom: 5px; }
+label { display: block; margin-top: 15px; margin-bottom: 5px; font-weight: bold; }
 
 input, textarea {
     width: 100%;
@@ -46,4 +47,11 @@ button {
 
 button:hover { background-color: #5b6eae; }
 
-#status { margin-top: 15px; text-align: center; }
+#status { margin-top: 15px; text-align: center; font-weight: bold; }
+
+/* Ajuste para el cuadro de Google en móviles */
+.g-recaptcha {
+    transform: scale(0.9);
+    transform-origin: 0 0;
+    margin-top: 15px;
+}
