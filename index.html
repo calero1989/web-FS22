@@ -5,41 +5,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Postulación Staff - FS22</title>
     <link rel="stylesheet" href="style.css">
-</head>
-<body>
-    <div class="container">
-        <h1>🚜 Postulación Staff FS22</h1>
-        <p>Completa el formulario para enviar tu solicitud al equipo.</p>
-        <form id="staffForm">
-            <label for="username">Nombre en Discord:</label>
-            <input type="text" id="username" name="username" placeholder="Ej: Juanito#1234" required>
-
-            <label for="age">Edad:</label>
-            <input type="number" id="age" name="age" required>
-
-            <label for="experience">¿Tienes experiencia previa?:</label>
-            <textarea id="experience" name="experience" rows="4" placeholder="Cuéntanos un poco..." required></textarea>
-
-            <button type="submit">Enviar Postulación</button>
-        </form>
-        <div id="status"></div>
-    </div>
-    <script src="script.js"></script>
-</body>
-</html>
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Postulación Staff - FS22</title>
-    <link rel="stylesheet" href="style.css">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 </head>
 <body>
     <div class="container">
         <h1>🚜 Postulación Staff FS22</h1>
-        <p>Completa los datos. Se requiere verificación humana.</p>
+        <p>Completa todos los campos para enviar tu solicitud.</p>
+        
         <form id="staffForm">
             <label for="username">Nombre en Discord:</label>
             <input type="text" id="username" name="username" placeholder="Ej: Juanito#1234" required>
@@ -51,9 +23,9 @@
             <input type="number" id="age" name="age" min="13" max="99" required>
 
             <label for="experience">¿Tienes experiencia previa?:</label>
-            <textarea id="experience" name="experience" rows="4" required></textarea>
+            <textarea id="experience" name="experience" rows="4" placeholder="Cuéntanos tu trayectoria..." required></textarea>
 
-            <div class="g-recaptcha" data-sitekey="6Le7UsUsAAAAAFl1k3T0ieEeb28XsaoMbppxvuwi" style="margin-top: 15px;"></div>
+            <div class="g-recaptcha" data-sitekey="TU_CLAVE_DE_SITIO_AQUI" style="margin-top: 15px;"></div>
 
             <button type="submit" id="submitBtn">Enviar Postulación</button>
         </form>
