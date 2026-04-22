@@ -1,26 +1,40 @@
 document.getElementById('staffForm').addEventListener('submit', function(e) {
     e.preventDefault();
 
-    const webhookURL = "https://discord.com/api/webhooks/1496149202084954233/TfALhN8Z6F4xi953Eo9zfjgByfR-thwxQvuox3uNds2Pb392idLYPIkyQCDPEyqq_9Ec";
+    // 1. Verificar si el usuario marcó el reCAPTCHA
+    const captchaResponse = grecaptcha.getResponse();
+    if (captchaResponse.length == 0) {
+        alert("Por favor, completa la verificación 'No soy un robot'.");
+        return;
+    }
 
+    // 2. Tu configuración (Pega tu Webhook aquí)
+    const webhookURL = "TU_WEBHOOK_DE_DISCORD_AQUI"; 
+
+    // 3. Recoger los datos del formulario
     const username = document.getElementById('username').value;
+    const email = document.getElementById('email').value;
     const age = document.getElementById('age').value;
     const experience = document.getElementById('experience').value;
 
+    // 4. Crear el mensaje para Discord
     const payload = {
         embeds: [{
-            title: "📩 Nueva Postulación de Staff",
-            color: 7419530,
+            title: "🛡️ NUEVA POSTULACIÓN VERIFICADA",
+            description: "Se ha recibido una nueva solicitud a través de la web oficial.",
+            color: 3066993, // Color verde
             fields: [
-                { name: "Usuario", value: username, inline: true },
-                { name: "Edad", value: age, inline: true },
-                { name: "Experiencia", value: experience }
+                { name: "👤 Usuario Discord", value: username, inline: true },
+                { name: "📧 Correo Electrónico", value: email, inline: true },
+                { name: "🎂 Edad", value: age, inline: true },
+                { name: "📝 Experiencia", value: experience }
             ],
-            footer: { text: "FS22 Vanilla RP" },
+            footer: { text: "Sistema de Seguridad FS22 | reCAPTCHA ✅" },
             timestamp: new Date()
         }]
     };
 
+    // 5. Enviar a Discord
     fetch(webhookURL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -28,14 +42,17 @@ document.getElementById('staffForm').addEventListener('submit', function(e) {
     })
     .then(response => {
         if (response.ok) {
-            document.getElementById('status').innerText = "✅ ¡Enviado con éxito!";
-            document.getElementById('staffForm').reset();
+            document.getElementById('status').innerText = "✅ ¡Postulación enviada con éxito!";
+            document.getElementById('status').style.color = "#43b581";
+            document.getElementById('staffForm').reset(); // Limpia el formulario
+            grecaptcha.reset(); // Reinicia el captcha
         } else {
-            document.getElementById('status').innerText = "❌ Error al enviar.";
+            document.getElementById('status').innerText = "❌ Error al enviar. Revisa el Webhook.";
+            document.getElementById('status').style.color = "#f04747";
         }
     })
     .catch(error => {
-        document.getElementById('status').innerText = "❌ Error de conexión.";
+        document.getElementById('status').innerText = "❌ Error de conexión con el servidor.";
+        console.error('Error:', error);
     });
 });
-
