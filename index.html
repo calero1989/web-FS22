@@ -10,27 +10,28 @@
 <body>
     <div class="container">
         <h1>🚜 Postulación Staff FS22</h1>
-        <p>Completa todos los campos para enviar tu solicitud.</p>
-        
+        <p>Completa todos los campos para enviar tu solicitud al canal <strong>#postulaciones-web</strong>.</p>
+
         <form id="staffForm">
             <label for="username">Nombre en Discord:</label>
             <input type="text" id="username" name="username" placeholder="Ej: Juanito#1234" required>
 
-            <label for="email">Correo Electrónico:</label>
+            <label for="email">Correo electrónico:</label>
             <input type="email" id="email" name="email" placeholder="tu@email.com" required>
 
             <label for="age">Edad:</label>
             <input type="number" id="age" name="age" min="13" max="99" required>
 
-            <label for="experience">¿Tienes experiencia previa?:</label>
+            <label for="experience">¿Tienes experiencia previa?</label>
             <textarea id="experience" name="experience" rows="4" placeholder="Cuéntanos tu trayectoria..." required></textarea>
 
-            <div class="g-recaptcha" data-sitekey="6Le7UsUsAAAAAFl1k3T0ieEeb28XsaoMbppxvuwi" style="margin-top: 15px;"></div>
+            <div class="g-recaptcha" data-sitekey="6Le7UsUsAAAAAFl1k3T0ieEeb28XsaoMbppxvuwi"></div>
 
-            <button type="submit" id="submitBtn">Enviar Postulación</button>
+            <button type="submit" id="submitBtn">Enviar postulación</button>
         </form>
         <div id="status"></div>
     </div>
+    <script src="config.example.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

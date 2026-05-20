@@ -1,58 +1,58 @@
-document.getElementById('staffForm').addEventListener('submit', function(e) {
-    e.preventDefault();
+document.getElementById("staffForm").addEventListener("submit", async function (e) {
+  e.preventDefault();
 
-    // 1. Verificar si el usuario marcó el reCAPTCHA
-    const captchaResponse = grecaptcha.getResponse();
-    if (captchaResponse.length == 0) {
-        alert("Por favor, completa la verificación 'No soy un robot'.");
-        return;
-    }
+  const status = document.getElementById("status");
+  const btn = document.getElementById("submitBtn");
+  const apiUrl = window.VCT_POSTULACION_API;
 
-    // 2. Tu configuración (Pega tu Webhook aquí)
-    const webhookURL = "https://discord.com/api/webhooks/1496149202084954233/TfALhN8Z6F4xi953Eo9zfjgByfR-thwxQvuox3uNds2Pb392idLYPIkyQCDPEyqq_9Ec"; 
+  if (!apiUrl || apiUrl.includes("TU_URL")) {
+    status.style.color = "#f04747";
+    status.innerText =
+      "❌ Falta configurar config.js con la URL del API (ver README).";
+    return;
+  }
 
-    // 3. Recoger los datos del formulario
-    const username = document.getElementById('username').value;
-    const email = document.getElementById('email').value;
-    const age = document.getElementById('age').value;
-    const experience = document.getElementById('experience').value;
+  const captcha = typeof grecaptcha !== "undefined" ? grecaptcha.getResponse() : "";
+  if (!captcha) {
+    status.style.color = "#f04747";
+    status.innerText = "❌ Completa la verificación «No soy un robot».";
+    return;
+  }
 
-    // 4. Crear el mensaje para Discord
-    const payload = {
-        embeds: [{
-            title: "🛡️ NUEVA POSTULACIÓN VERIFICADA",
-            description: "Se ha recibido una nueva solicitud a través de la web oficial.",
-            color: 3066993, // Color verde
-            fields: [
-                { name: "👤 Usuario Discord", value: username, inline: true },
-                { name: "📧 Correo Electrónico", value: email, inline: true },
-                { name: "🎂 Edad", value: age, inline: true },
-                { name: "📝 Experiencia", value: experience }
-            ],
-            footer: { text: "Sistema de Seguridad FS22 | reCAPTCHA ✅" },
-            timestamp: new Date()
-        }]
-    };
+  status.style.color = "#faa61a";
+  status.innerText = "Enviando…";
+  btn.disabled = true;
 
-    // 5. Enviar a Discord
-    fetch(webhookURL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-    })
-    .then(response => {
-        if (response.ok) {
-            document.getElementById('status').innerText = "✅ ¡Postulación enviada con éxito!";
-            document.getElementById('status').style.color = "#43b581";
-            document.getElementById('staffForm').reset(); // Limpia el formulario
-            grecaptcha.reset(); // Reinicia el captcha
-        } else {
-            document.getElementById('status').innerText = "❌ Error al enviar. Revisa el Webhook.";
-            document.getElementById('status').style.color = "#f04747";
-        }
-    })
-    .catch(error => {
-        document.getElementById('status').innerText = "❌ Error de conexión con el servidor.";
-        console.error('Error:', error);
+  const body = {
+    username: document.getElementById("username").value.trim(),
+    email: document.getElementById("email").value.trim(),
+    age: document.getElementById("age").value,
+    experience: document.getElementById("experience").value.trim(),
+    "g-recaptcha-response": captcha,
+  };
+
+  try {
+    const res = await fetch(apiUrl, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(body),
     });
+    const data = await res.json().catch(() => ({}));
+    if (res.ok && data.ok) {
+      status.style.color = "#43b581";
+      status.innerText = data.mensaje || "✅ Postulación enviada.";
+      document.getElementById("staffForm").reset();
+      grecaptcha.reset();
+    } else {
+      status.style.color = "#f04747";
+      status.innerText = data.error || "❌ No se pudo enviar. Inténtalo más tarde.";
+    }
+  } catch (err) {
+    status.style.color = "#f04747";
+    status.innerText =
+      "❌ Error de conexión con el servidor. Comprueba config.js (debe ser HTTPS desde GitHub Pages).";
+    console.error(err);
+  } finally {
+    btn.disabled = false;
+  }
 });
